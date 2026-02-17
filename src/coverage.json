@@ -1,0 +1,361 @@
+{
+  "kind": "coverage_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-17T12:01:33.410Z",
+  "sources": {
+    "buildRequest": true,
+    "implementationPlan": true
+  },
+  "requirements": {
+    "total": 16,
+    "implemented": 16,
+    "items": [
+      {
+        "id": "REQ-1",
+        "summary": "Implement a username/password login system with role-based permissions, including an initial admin account (username: admin001, password: admin001) and enforcement that only admins can manage users and access admin-only settings.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/auth/AuthProvider.tsx",
+          "frontend/src/auth/RequireAuth.tsx",
+          "frontend/src/pages/LoginPage.tsx",
+          "frontend/src/components/AccessDeniedScreen.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/App.tsx",
+          "frontend/src/pages/LoginPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-10",
+        "summary": "Build the Dashboard home page with: (1) a sales chart, (2) a pending payments list showing amount and person name, and (3) a low-inventory widget showing products low in stock with remaining quantity.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/package.json",
+          "frontend/src/pages/DashboardPage.tsx",
+          "frontend/src/components/dashboard/SalesChartCard.tsx",
+          "frontend/src/components/dashboard/PendingPaymentsCard.tsx",
+          "frontend/src/components/dashboard/LowInventoryCard.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/DashboardPage.tsx",
+          "frontend/src/components/dashboard/SalesChartCard.tsx",
+          "frontend/src/components/dashboard/PendingPaymentsCard.tsx",
+          "frontend/src/components/dashboard/LowInventoryCard.tsx"
+        ]
+      },
+      {
+        "id": "REQ-11",
+        "summary": "Implement Invoice creation and rendering with a properly aligned “original invoice” A5 layout, including: item code, item name, quantity, date, delivery person name, delivered-to customer, and firm details: DHARA ENTERPRISES; phone 9891860870; address C-134A Raju Park Near Sainik Farms Eastern Avenue New Delhi -80; website dharagroups.in; email dharaindiaenterprises@gmail.com.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/invoice/InvoicePage.tsx",
+          "frontend/src/components/invoice/InvoiceA5.tsx",
+          "frontend/src/components/invoice/invoice-print.css"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/invoice/InvoicePage.tsx",
+          "frontend/src/components/invoice/InvoiceA5.tsx"
+        ]
+      },
+      {
+        "id": "REQ-12",
+        "summary": "Make invoices downloadable as a file (PDF) in A5 size.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/package.json",
+          "frontend/src/utils/pdf.ts",
+          "frontend/src/pages/invoice/InvoicePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/invoice/InvoicePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-13",
+        "summary": "Add Paytm UPI QR payment support for invoices: show a scannable QR code that encodes a UPI payment request with the exact invoice total so the payer sees the total amount and can pay that exact amount.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/package.json",
+          "frontend/src/utils/upi.ts",
+          "frontend/src/components/invoice/InvoicePaymentQR.tsx",
+          "frontend/src/pages/invoice/InvoicePage.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/invoice/InvoicePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-14",
+        "summary": "Create a Settings section in the navbar with admin-only controls to change user IDs/passwords and manage other core business/payment settings (including Paytm/UPI QR configuration used for invoice QR generation).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/settings/SettingsPage.tsx",
+          "frontend/src/components/settings/UPISettingsForm.tsx",
+          "frontend/src/components/settings/UserCredentialsPanel.tsx",
+          "frontend/src/routes/AppRouter.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/settings/SettingsPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-15",
+        "summary": "Implement a simple, premium UI theme using primarily white and black with minimal accent colors, applied consistently across all pages and components.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/layouts/AppLayout.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/index.css",
+          "frontend/tailwind.config.js",
+          "frontend/src/layouts/AppLayout.tsx"
+        ]
+      },
+      {
+        "id": "REQ-16",
+        "summary": "Add a Reports section that includes: (a) daily/monthly sales summary, (b) profit/loss calculation, and (c) tax reports (GST if applicable), computed from stored purchase and sales data.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/reports/ReportsPage.tsx",
+          "frontend/src/utils/reports.ts",
+          "frontend/src/components/reports/ReportFilters.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/reports/ReportsPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-2",
+        "summary": "Create the top navigation bar and page structure with these sections and dropdowns: Register (Vendor, Customer, User), Inventory (Inventory, Sales, Purchase, Order Book, Ledger), Invoice, Reports, and Settings.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/package.json",
+          "frontend/src/routes/AppRouter.tsx",
+          "frontend/src/layouts/AppLayout.tsx",
+          "frontend/src/components/TopNavBar.tsx",
+          "frontend/src/App.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/layouts/AppLayout.tsx",
+          "frontend/src/components/TopNavBar.tsx",
+          "frontend/src/App.tsx"
+        ]
+      },
+      {
+        "id": "REQ-3",
+        "summary": "Implement Vendor and Customer management: add/register new vendors and customers, list them, and allow deletion from the Register section.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/register/VendorsPage.tsx",
+          "frontend/src/pages/register/CustomersPage.tsx",
+          "frontend/src/hooks/customers/useCustomers.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/register/VendorsPage.tsx",
+          "frontend/src/pages/register/CustomersPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-4",
+        "summary": "Implement User management (admin-only): create new users, assign roles/permissions, list users, and delete/disable users from Register > User.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/register/UsersPage.tsx",
+          "frontend/src/hooks/auth/useCallerRole.ts",
+          "frontend/src/components/TopNavBar.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/register/UsersPage.tsx",
+          "frontend/src/components/TopNavBar.tsx"
+        ]
+      },
+      {
+        "id": "REQ-5",
+        "summary": "Implement Inventory item management: add new stock items, edit them, delete them, and track stock with dates for when items came into inventory and when sold.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/inventory/InventoryPage.tsx",
+          "frontend/src/hooks/products/useProducts.ts",
+          "frontend/src/pages/settings/InventorySettingsPanel.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/inventory/InventoryPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-6",
+        "summary": "Implement Purchase entry module (Inventory > Purchase): allow recording purchases including vendor, items, quantities, purchase date, and purchase price (cost). Purchases must increase on-hand inventory and be stored for reporting.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/inventory/PurchasePage.tsx",
+          "frontend/src/components/forms/LineItemsEditor.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/inventory/PurchasePage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-7",
+        "summary": "Implement Sales entry module (Inventory > Sales): allow recording sales including customer, items, quantities, sale date, selling price, and delivery person name, and support marking payment status (paid/unpaid/partial). Sales must decrease on-hand inventory and drive pending payment tracking.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/inventory/SalesPage.tsx",
+          "frontend/src/components/payments/PaymentStatusBadge.tsx"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/inventory/SalesPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-8",
+        "summary": "Implement Order Book (Inventory > Order Book): show all orders/items sold with quantity, delivery person name, date, and price; support filtering/searching and status visibility for payment (paid/pending).",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/inventory/OrderBookPage.tsx",
+          "frontend/src/hooks/orders/useOrders.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/inventory/OrderBookPage.tsx"
+        ]
+      },
+      {
+        "id": "REQ-9",
+        "summary": "Implement Ledger (Inventory > Ledger) that automatically fetches entries from Order Book/Sales and calculates balances, showing a running total and the final positive/negative balance at the bottom; pending payments must be clearly indicated.",
+        "status": "implemented",
+        "plannedFiles": [
+          "frontend/src/pages/inventory/LedgerPage.tsx",
+          "frontend/src/utils/ledger.ts"
+        ],
+        "matchedFiles": [
+          "frontend/src/pages/inventory/LedgerPage.tsx"
+        ]
+      }
+    ]
+  },
+  "changedFiles": [
+    "backend/authorization/MixinAuthorization.mo",
+    "backend/authorization/access-control.mo",
+    "backend/main.mo",
+    "build-request.json",
+    "build-template/Dockerfile",
+    "build-template/LICENSE",
+    "build-template/README.md",
+    "build-template/deploy.sh",
+    "build-template/icp.yaml",
+    "build-template/package.json",
+    "build-template/pnpm-lock.yaml",
+    "build-template/pnpm-workspace.yaml",
+    "build-template/scripts/prune-unused-images.js",
+    "build-template/scripts/resize-images.js",
+    "build-template/src/backend/canister.yaml",
+    "build-template/src/backend/system-idl/aaaaa-aa.did",
+    "build-template/src/frontend/canister.yaml",
+    "build-template/src/frontend/components.json",
+    "build-template/src/frontend/env.json",
+    "build-template/src/frontend/eslint-rules/no-bigint-in-query-keys.js",
+    "build-template/src/frontend/eslint-rules/require-internet-identity-provider.js",
+    "build-template/src/frontend/eslint.config.js",
+    "build-template/src/frontend/package.json",
+    "build-template/src/frontend/postcss.config.js",
+    "build-template/src/frontend/src/components/ui/accordion.tsx",
+    "build-template/src/frontend/src/components/ui/alert-dialog.tsx",
+    "build-template/src/frontend/src/components/ui/alert.tsx",
+    "build-template/src/frontend/src/components/ui/aspect-ratio.tsx",
+    "build-template/src/frontend/src/components/ui/avatar.tsx",
+    "build-template/src/frontend/src/components/ui/badge.tsx",
+    "build-template/src/frontend/src/components/ui/breadcrumb.tsx",
+    "build-template/src/frontend/src/components/ui/button.tsx",
+    "build-template/src/frontend/src/components/ui/calendar.tsx",
+    "build-template/src/frontend/src/components/ui/card.tsx",
+    "build-template/src/frontend/src/components/ui/carousel.tsx",
+    "build-template/src/frontend/src/components/ui/chart.tsx",
+    "build-template/src/frontend/src/components/ui/checkbox.tsx",
+    "build-template/src/frontend/src/components/ui/collapsible.tsx",
+    "build-template/src/frontend/src/components/ui/command.tsx",
+    "build-template/src/frontend/src/components/ui/context-menu.tsx",
+    "build-template/src/frontend/src/components/ui/dialog.tsx",
+    "build-template/src/frontend/src/components/ui/drawer.tsx",
+    "build-template/src/frontend/src/components/ui/dropdown-menu.tsx",
+    "build-template/src/frontend/src/components/ui/form.tsx",
+    "build-template/src/frontend/src/components/ui/hover-card.tsx",
+    "build-template/src/frontend/src/components/ui/input-otp.tsx",
+    "build-template/src/frontend/src/components/ui/input.tsx",
+    "build-template/src/frontend/src/components/ui/label.tsx",
+    "build-template/src/frontend/src/components/ui/menubar.tsx",
+    "build-template/src/frontend/src/components/ui/navigation-menu.tsx",
+    "build-template/src/frontend/src/components/ui/pagination.tsx",
+    "build-template/src/frontend/src/components/ui/popover.tsx",
+    "build-template/src/frontend/src/components/ui/progress.tsx",
+    "build-template/src/frontend/src/components/ui/radio-group.tsx",
+    "build-template/src/frontend/src/components/ui/resizable.tsx",
+    "build-template/src/frontend/src/components/ui/scroll-area.tsx",
+    "build-template/src/frontend/src/components/ui/select.tsx",
+    "build-template/src/frontend/src/components/ui/separator.tsx",
+    "build-template/src/frontend/src/components/ui/sheet.tsx",
+    "build-template/src/frontend/src/components/ui/sidebar.tsx",
+    "build-template/src/frontend/src/components/ui/skeleton.tsx",
+    "build-template/src/frontend/src/components/ui/slider.tsx",
+    "build-template/src/frontend/src/components/ui/sonner.tsx",
+    "build-template/src/frontend/src/components/ui/switch.tsx",
+    "build-template/src/frontend/src/components/ui/table.tsx",
+    "build-template/src/frontend/src/components/ui/tabs.tsx",
+    "build-template/src/frontend/src/components/ui/textarea.tsx",
+    "build-template/src/frontend/src/components/ui/toggle-group.tsx",
+    "build-template/src/frontend/src/components/ui/toggle.tsx",
+    "build-template/src/frontend/src/components/ui/tooltip.tsx",
+    "build-template/src/frontend/src/hooks/use-mobile.tsx",
+    "build-template/src/frontend/src/lib/utils.ts",
+    "build-template/src/frontend/tsconfig.json",
+    "build-template/src/frontend/vite.config.js",
+    "build-template/tsconfig.json",
+    "caffeine.lock.json",
+    "feature_evidence.json",
+    "frontend-file-summaries.txt",
+    "frontend-implementation-plan.json",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/backend.d.ts",
+    "frontend/src/backend.ts",
+    "frontend/src/camera/useCamera.ts",
+    "frontend/src/components/TopNavBar.tsx",
+    "frontend/src/components/dashboard/LowInventoryCard.tsx",
+    "frontend/src/components/dashboard/PendingPaymentsCard.tsx",
+    "frontend/src/components/dashboard/SalesChartCard.tsx",
+    "frontend/src/components/invoice/InvoiceA5.tsx",
+    "frontend/src/config.ts",
+    "frontend/src/declarations/backend.did.d.ts",
+    "frontend/src/declarations/backend.did.js",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/layouts/AppLayout.tsx",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/DashboardPage.tsx",
+    "frontend/src/pages/LoginPage.tsx",
+    "frontend/src/pages/inventory/InventoryPage.tsx",
+    "frontend/src/pages/inventory/LedgerPage.tsx",
+    "frontend/src/pages/inventory/OrderBookPage.tsx",
+    "frontend/src/pages/inventory/PurchasePage.tsx",
+    "frontend/src/pages/inventory/SalesPage.tsx",
+    "frontend/src/pages/invoice/InvoicePage.tsx",
+    "frontend/src/pages/register/CustomersPage.tsx",
+    "frontend/src/pages/register/UsersPage.tsx",
+    "frontend/src/pages/register/VendorsPage.tsx",
+    "frontend/src/pages/reports/ReportsPage.tsx",
+    "frontend/src/pages/settings/SettingsPage.tsx",
+    "frontend/src/qr-code/useQRScanner.ts",
+    "frontend/src/ui-summary.json",
+    "frontend/src/utils/StorageClient.ts",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json",
+    "scratch/component-selection.json",
+    "spec.md",
+    "spec_vs_diff_report.json"
+  ]
+}

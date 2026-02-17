@@ -1,0 +1,352 @@
+{
+  "kind": "feature_evidence_report",
+  "features": [
+    {
+      "featureId": "feature-implement-a-username-password-login-system-with-role-based-permissions-including-an-initial-admin-account-username-admin001-password-admin001-and-enforcement-that-only-admins-can-manage-users-and-access-admin-only-settings",
+      "featureTitle": "Implement a username/password login system with role-based permissions, including an initial admin account (username: admin001, password: admin001) and enforcement that only admins can manage users and access admin-only settings.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/pages/LoginPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-1"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-the-top-navigation-bar-and-page-structure-with-these-sections-and-dropdowns-register-vendor-customer-user-inventory-inventory-sales-purchase-order-book-ledger-invoice-reports-and-settings",
+      "featureTitle": "Create the top navigation bar and page structure with these sections and dropdowns: Register (Vendor, Customer, User), Inventory (Inventory, Sales, Purchase, Order Book, Ledger), Invoice, Reports, and Settings.",
+      "files": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/TopNavBar.tsx",
+        "frontend/src/layouts/AppLayout.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-2"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-vendor-and-customer-management-add-register-new-vendors-and-customers-list-them-and-allow-deletion-from-the-register-section",
+      "featureTitle": "Implement Vendor and Customer management: add/register new vendors and customers, list them, and allow deletion from the Register section.",
+      "files": [
+        "frontend/src/pages/register/CustomersPage.tsx",
+        "frontend/src/pages/register/VendorsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-3"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-user-management-admin-only-create-new-users-assign-roles-permissions-list-users-and-delete-disable-users-from-register-user",
+      "featureTitle": "Implement User management (admin-only): create new users, assign roles/permissions, list users, and delete/disable users from Register > User.",
+      "files": [
+        "frontend/src/components/TopNavBar.tsx",
+        "frontend/src/pages/register/UsersPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-4"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-inventory-item-management-add-new-stock-items-edit-them-delete-them-and-track-stock-with-dates-for-when-items-came-into-inventory-and-when-sold",
+      "featureTitle": "Implement Inventory item management: add new stock items, edit them, delete them, and track stock with dates for when items came into inventory and when sold.",
+      "files": [
+        "frontend/src/pages/inventory/InventoryPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-5"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-purchase-entry-module-inventory-purchase-allow-recording-purchases-including-vendor-items-quantities-purchase-date-and-purchase-price-cost-purchases-must-increase-on-hand-inventory-and-be-stored-for-reporting",
+      "featureTitle": "Implement Purchase entry module (Inventory > Purchase): allow recording purchases including vendor, items, quantities, purchase date, and purchase price (cost). Purchases must increase on-hand inventory and be stored for reporting.",
+      "files": [
+        "frontend/src/pages/inventory/PurchasePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-6"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-sales-entry-module-inventory-sales-allow-recording-sales-including-customer-items-quantities-sale-date-selling-price-and-delivery-person-name-and-support-marking-payment-status-paid-unpaid-partial-sales-must-decrease-on-hand-inventory-and-drive-pending-payment-tracking",
+      "featureTitle": "Implement Sales entry module (Inventory > Sales): allow recording sales including customer, items, quantities, sale date, selling price, and delivery person name, and support marking payment status (paid/unpaid/partial). Sales must decrease on-hand inventory and drive pending payment tracking.",
+      "files": [
+        "frontend/src/pages/inventory/SalesPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-order-book-inventory-order-book-show-all-orders-items-sold-with-quantity-delivery-person-name-date-and-price-support-filtering-searching-and-status-visibility-for-payment-paid-pending",
+      "featureTitle": "Implement Order Book (Inventory > Order Book): show all orders/items sold with quantity, delivery person name, date, and price; support filtering/searching and status visibility for payment (paid/pending).",
+      "files": [
+        "frontend/src/pages/inventory/OrderBookPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-8"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-ledger-inventory-ledger-that-automatically-fetches-entries-from-order-book-sales-and-calculates-balances-showing-a-running-total-and-the-final-positive-negative-balance-at-the-bottom-pending-payments-must-be-clearly-indicated",
+      "featureTitle": "Implement Ledger (Inventory > Ledger) that automatically fetches entries from Order Book/Sales and calculates balances, showing a running total and the final positive/negative balance at the bottom; pending payments must be clearly indicated.",
+      "files": [
+        "frontend/src/pages/inventory/LedgerPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-build-the-dashboard-home-page-with-1-a-sales-chart-2-a-pending-payments-list-showing-amount-and-person-name-and-3-a-low-inventory-widget-showing-products-low-in-stock-with-remaining-quantity",
+      "featureTitle": "Build the Dashboard home page with: (1) a sales chart, (2) a pending payments list showing amount and person name, and (3) a low-inventory widget showing products low in stock with remaining quantity.",
+      "files": [
+        "frontend/src/components/dashboard/LowInventoryCard.tsx",
+        "frontend/src/components/dashboard/PendingPaymentsCard.tsx",
+        "frontend/src/components/dashboard/SalesChartCard.tsx",
+        "frontend/src/pages/DashboardPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-10"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-invoice-creation-and-rendering-with-a-properly-aligned-original-invoice-a5-layout-including-item-code-item-name-quantity-date-delivery-person-name-delivered-to-customer-and-firm-details-dhara-enterprises-phone-9891860870-address-c-134a-raju-park-near-sainik-farms-eastern-avenue-new-delhi-80-website-dharagroups-in-email-dharaindiaenterprises-gmail-com",
+      "featureTitle": "Implement Invoice creation and rendering with a properly aligned “original invoice” A5 layout, including: item code, item name, quantity, date, delivery person name, delivered-to customer, and firm details: DHARA ENTERPRISES; phone 9891860870; address C-134A Raju Park Near Sainik Farms Eastern Avenue New Delhi -80; website dharagroups.in; email dharaindiaenterprises@gmail.com.",
+      "files": [
+        "frontend/src/components/invoice/InvoiceA5.tsx",
+        "frontend/src/pages/invoice/InvoicePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-11"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-make-invoices-downloadable-as-a-file-pdf-in-a5-size",
+      "featureTitle": "Make invoices downloadable as a file (PDF) in A5 size.",
+      "files": [
+        "frontend/src/pages/invoice/InvoicePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-12"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-paytm-upi-qr-payment-support-for-invoices-show-a-scannable-qr-code-that-encodes-a-upi-payment-request-with-the-exact-invoice-total-so-the-payer-sees-the-total-amount-and-can-pay-that-exact-amount",
+      "featureTitle": "Add Paytm UPI QR payment support for invoices: show a scannable QR code that encodes a UPI payment request with the exact invoice total so the payer sees the total amount and can pay that exact amount.",
+      "files": [
+        "frontend/src/pages/invoice/InvoicePage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-13"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-create-a-settings-section-in-the-navbar-with-admin-only-controls-to-change-user-ids-passwords-and-manage-other-core-business-payment-settings-including-paytm-upi-qr-configuration-used-for-invoice-qr-generation",
+      "featureTitle": "Create a Settings section in the navbar with admin-only controls to change user IDs/passwords and manage other core business/payment settings (including Paytm/UPI QR configuration used for invoice QR generation).",
+      "files": [
+        "frontend/src/pages/settings/SettingsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-14"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-implement-a-simple-premium-ui-theme-using-primarily-white-and-black-with-minimal-accent-colors-applied-consistently-across-all-pages-and-components",
+      "featureTitle": "Implement a simple, premium UI theme using primarily white and black with minimal accent colors, applied consistently across all pages and components.",
+      "files": [
+        "frontend/src/index.css",
+        "frontend/src/layouts/AppLayout.tsx",
+        "frontend/tailwind.config.js"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-15"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-a-reports-section-that-includes-a-daily-monthly-sales-summary-b-profit-loss-calculation-and-c-tax-reports-gst-if-applicable-computed-from-stored-purchase-and-sales-data",
+      "featureTitle": "Add a Reports section that includes: (a) daily/monthly sales summary, (b) profit/loss calculation, and (c) tax reports (GST if applicable), computed from stored purchase and sales data.",
+      "files": [
+        "frontend/src/pages/reports/ReportsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "qr-code@1.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0",
+        "camera@1.0.0"
+      ],
+      "testIds": [
+        "REQ-16"
+      ],
+      "confidence": "high"
+    }
+  ]
+}

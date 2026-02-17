@@ -1,0 +1,210 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Build a web-based invoice + inventory management system for a packed drinking water/beverages business, including customer/vendor/user management, sales/purchase/inventory tracking, A5 invoice generation with downloadable PDF, Paytm UPI QR payments, dashboard analytics, ledger/pending payments tracking, role-based login/permissions, and business reports.",
+  "architectural_notes": [
+    "Navigation structure: top navbar with Register (Vendor/Customer/User), Inventory (Inventory/Sales/Purchase/Order Book/Ledger), Invoice, and Settings.",
+    "Invoice format requirement: A5 paper size, aligned layout, includes delivery person + delivered-to fields and firm contact block (DHARA ENTERPRISES, phone, address, website, email).",
+    "Theme requirement: simple white + premium black styling (limited accent colors)."
+  ],
+  "known_issues": [
+    "Initial admin credentials provided (admin001/admin001) are insecure if left unchanged; require forced change and secure storage."
+  ],
+  "isFixRequest": false,
+  "existing_features": [
+    {
+      "id": "feature-implement-a-username-password-login-system-with-role-based-permissions-including-an-initial-admin-account-username-admin001-password-admin001-and-enforcement-that-only-admins-can-manage-users-and-access-admin-only-settings",
+      "title": "Implement a username/password login system with role-based permissions, including an initial admin account (username: admin001, password: admin001) and enforcement that only admins can manage users and access admin-only settings.",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-the-top-navigation-bar-and-page-structure-with-these-sections-and-dropdowns-register-vendor-customer-user-inventory-inventory-sales-purchase-order-book-ledger-invoice-reports-and-settings",
+      "title": "Create the top navigation bar and page structure with these sections and dropdowns: Register (Vendor, Customer, User), Inventory (Inventory, Sales, Purchase, Order Book, Ledger), Invoice, Reports, and Settings.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-vendor-and-customer-management-add-register-new-vendors-and-customers-list-them-and-allow-deletion-from-the-register-section",
+      "title": "Implement Vendor and Customer management: add/register new vendors and customers, list them, and allow deletion from the Register section.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-user-management-admin-only-create-new-users-assign-roles-permissions-list-users-and-delete-disable-users-from-register-user",
+      "title": "Implement User management (admin-only): create new users, assign roles/permissions, list users, and delete/disable users from Register > User.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-inventory-item-management-add-new-stock-items-edit-them-delete-them-and-track-stock-with-dates-for-when-items-came-into-inventory-and-when-sold",
+      "title": "Implement Inventory item management: add new stock items, edit them, delete them, and track stock with dates for when items came into inventory and when sold.",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-purchase-entry-module-inventory-purchase-allow-recording-purchases-including-vendor-items-quantities-purchase-date-and-purchase-price-cost-purchases-must-increase-on-hand-inventory-and-be-stored-for-reporting",
+      "title": "Implement Purchase entry module (Inventory > Purchase): allow recording purchases including vendor, items, quantities, purchase date, and purchase price (cost). Purchases must increase on-hand inventory and be stored for reporting.",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-sales-entry-module-inventory-sales-allow-recording-sales-including-customer-items-quantities-sale-date-selling-price-and-delivery-person-name-and-support-marking-payment-status-paid-unpaid-partial-sales-must-decrease-on-hand-inventory-and-drive-pending-payment-tracking",
+      "title": "Implement Sales entry module (Inventory > Sales): allow recording sales including customer, items, quantities, sale date, selling price, and delivery person name, and support marking payment status (paid/unpaid/partial). Sales must decrease on-hand inventory and drive pending payment tracking.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-order-book-inventory-order-book-show-all-orders-items-sold-with-quantity-delivery-person-name-date-and-price-support-filtering-searching-and-status-visibility-for-payment-paid-pending",
+      "title": "Implement Order Book (Inventory > Order Book): show all orders/items sold with quantity, delivery person name, date, and price; support filtering/searching and status visibility for payment (paid/pending).",
+      "reqIds": [
+        "REQ-8"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-ledger-inventory-ledger-that-automatically-fetches-entries-from-order-book-sales-and-calculates-balances-showing-a-running-total-and-the-final-positive-negative-balance-at-the-bottom-pending-payments-must-be-clearly-indicated",
+      "title": "Implement Ledger (Inventory > Ledger) that automatically fetches entries from Order Book/Sales and calculates balances, showing a running total and the final positive/negative balance at the bottom; pending payments must be clearly indicated.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-build-the-dashboard-home-page-with-1-a-sales-chart-2-a-pending-payments-list-showing-amount-and-person-name-and-3-a-low-inventory-widget-showing-products-low-in-stock-with-remaining-quantity",
+      "title": "Build the Dashboard home page with: (1) a sales chart, (2) a pending payments list showing amount and person name, and (3) a low-inventory widget showing products low in stock with remaining quantity.",
+      "reqIds": [
+        "REQ-10"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-invoice-creation-and-rendering-with-a-properly-aligned-original-invoice-a5-layout-including-item-code-item-name-quantity-date-delivery-person-name-delivered-to-customer-and-firm-details-dhara-enterprises-phone-9891860870-address-c-134a-raju-park-near-sainik-farms-eastern-avenue-new-delhi-80-website-dharagroups-in-email-dharaindiaenterprises-gmail-com",
+      "title": "Implement Invoice creation and rendering with a properly aligned “original invoice” A5 layout, including: item code, item name, quantity, date, delivery person name, delivered-to customer, and firm details: DHARA ENTERPRISES; phone 9891860870; address C-134A Raju Park Near Sainik Farms Eastern Avenue New Delhi -80; website dharagroups.in; email dharaindiaenterprises@gmail.com.",
+      "reqIds": [
+        "REQ-11"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-make-invoices-downloadable-as-a-file-pdf-in-a5-size",
+      "title": "Make invoices downloadable as a file (PDF) in A5 size.",
+      "reqIds": [
+        "REQ-12"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-paytm-upi-qr-payment-support-for-invoices-show-a-scannable-qr-code-that-encodes-a-upi-payment-request-with-the-exact-invoice-total-so-the-payer-sees-the-total-amount-and-can-pay-that-exact-amount",
+      "title": "Add Paytm UPI QR payment support for invoices: show a scannable QR code that encodes a UPI payment request with the exact invoice total so the payer sees the total amount and can pay that exact amount.",
+      "reqIds": [
+        "REQ-13"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-create-a-settings-section-in-the-navbar-with-admin-only-controls-to-change-user-ids-passwords-and-manage-other-core-business-payment-settings-including-paytm-upi-qr-configuration-used-for-invoice-qr-generation",
+      "title": "Create a Settings section in the navbar with admin-only controls to change user IDs/passwords and manage other core business/payment settings (including Paytm/UPI QR configuration used for invoice QR generation).",
+      "reqIds": [
+        "REQ-14"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-implement-a-simple-premium-ui-theme-using-primarily-white-and-black-with-minimal-accent-colors-applied-consistently-across-all-pages-and-components",
+      "title": "Implement a simple, premium UI theme using primarily white and black with minimal accent colors, applied consistently across all pages and components.",
+      "reqIds": [
+        "REQ-15"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-a-reports-section-that-includes-a-daily-monthly-sales-summary-b-profit-loss-calculation-and-c-tax-reports-gst-if-applicable-computed-from-stored-purchase-and-sales-data",
+      "title": "Add a Reports section that includes: (a) daily/monthly sales summary, (b) profit/loss calculation, and (c) tax reports (GST if applicable), computed from stored purchase and sales data.",
+      "reqIds": [
+        "REQ-16"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "User authentication with role-based access/permissions; admin-only settings to manage user IDs/passwords",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-2",
+      "summary": "Customer and vendor registration management (add/delete) plus user registration from a unified Register section",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Inventory item management with stock in/out, ability to add/delete items, and tracking of purchase/arrival date and selling date",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Sales and purchase entry modules under Inventory section (Sales, Purchase)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Order Book module to record sold items with quantity, delivery person name, date, and price",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-6",
+      "summary": "Ledger module that auto-fetches from Order Book, shows balances, and highlights pending payments (e.g., red)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-7",
+      "summary": "Invoice module: properly aligned original-style A5 invoice with required fields (item code/name/qty/date/delivery details), firm details, and downloadable invoice (PDF)",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Paytm UPI QR payment support with scannable code that shows the exact invoice total for payment",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-9",
+      "summary": "Dashboard home page: sales chart, pending payments list (amount + person), and low-inventory alert widget showing remaining qty",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-10",
+      "summary": "Reporting: daily/monthly sales summaries, profit/loss calculation, and tax reports (GST if applicable)",
+      "reqIds": [],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "Dhara Inventory",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

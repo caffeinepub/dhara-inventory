@@ -1,0 +1,211 @@
+{
+  "kind": "spec_vs_diff_report",
+  "version": "1.0",
+  "generatedAt": "2026-02-17T12:01:33.406Z",
+  "summary": "Diff adds a basic single-canister Motoko backend with products/customers/orders and a TanStack Router frontend with navbar, dashboard widgets, inventory CRUD for products, order book list, and an A5-styled invoice view with print CSS. However, most BuildRequest business modules (username/password auth, vendors/users management, purchases/sales with payment tracking, ledger, reports, settings-driven UPI config, and PDF download) are missing or only stubbed/placeholder.",
+  "missing_requirements": [
+    {
+      "id": "REQ-1",
+      "requirement": "Username/password login with role-based permissions (Admin/Staff), initial admin (admin001/admin001), persistence across refresh, and admin-only enforcement in UI and backend.",
+      "reason": "Frontend uses Internet Identity-based authentication (principal/identity) rather than username/password; no evidence of initial admin credentials or password change flow. Backend authorization exists but is principal/permission based, not username/password auth.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/layouts/AppLayout.tsx",
+        "frontend/src/hooks/useInternetIdentity.ts",
+        "frontend/src/hooks/useActor.ts",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "requirement": "Vendor management (add/list/delete) and Customer management (add/list/delete) under Register section with backend persistence and authorization.",
+      "reason": "Backend defines and stores Customers but no Vendor type/storage/APIs are shown; vendor functionality cannot be confirmed. Customer CRUD UI is not evidenced in shown diffs (CustomersPage content not included), so full AC (search/sort/delete w/ confirmation) cannot be verified.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/App.tsx",
+        "frontend/src/components/TopNavBar.tsx"
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "requirement": "Admin-only user management: create users, assign roles/permissions, list users, delete/disable users; disabled users cannot log in; non-admin blocked in UI and backend.",
+      "reason": "No username/password user entities are shown, and UsersPage implementation is not included. Backend shows access control mixin usage but no explicit user CRUD endpoints are evidenced in the truncated backend excerpt.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/TopNavBar.tsx",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "requirement": "Inventory items with item code/name/quantity, edit/delete with safeguards, transaction-level stock-in/stock-out dates, and configurable low-stock threshold.",
+      "reason": "Backend Product type lacks item code and transaction history; no purchase/sale transaction records updating inventory with dates. Low-stock threshold is hard-coded in the dashboard widget, not configurable.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/dashboard/LowInventoryCard.tsx",
+        "frontend/src/pages/inventory/InventoryPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "requirement": "Purchase entry module with vendor selection, line items, purchase date/cost, increases inventory, list/filter, and atomic persistence.",
+      "reason": "Purchase page is explicitly a placeholder indicating backend not implemented; backend excerpt does not show purchase records or atomic inventory adjustments.",
+      "evidence": [
+        "frontend/src/pages/inventory/PurchasePage.tsx",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "requirement": "Sales entry module with customer selection, line items, sale date, selling price, delivery person, payment status (paid/unpaid/partial) with due amounts, and red-highlight pending.",
+      "reason": "Sales page is a placeholder. Backend OrderType has a generic status (#pending/#completed/#cancelled) but no paid/unpaid/partial, paid amount/due amount, or delivery person fields.",
+      "evidence": [
+        "frontend/src/pages/inventory/SalesPage.tsx",
+        "backend/main.mo",
+        "frontend/src/components/dashboard/PendingPaymentsCard.tsx"
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "requirement": "Order Book showing all sold items with qty, delivery person, date, price, filter by date range/customer/payment status, red-highlight pending, backed by persisted sales/order data.",
+      "reason": "OrderBookPage lists orders but lacks required columns like delivery person and item quantities per row, and lacks date-range and payment-status filters (only a customer-name search). Payment status model is not evidenced beyond generic order.status.",
+      "evidence": [
+        "frontend/src/pages/inventory/OrderBookPage.tsx",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "requirement": "Ledger derived from sales/orders with running totals, final balance, and clearly indicated pending payments.",
+      "reason": "Ledger page is a placeholder explicitly stating backend support is not implemented.",
+      "evidence": [
+        "frontend/src/pages/inventory/LedgerPage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "requirement": "Dashboard with sales chart, pending payments list (click-through), low-inventory widget, all driven by backend data with correct metrics and empty states.",
+      "reason": "Chart and lists exist and load from queries, but key summary cards show hardcoded values (₹0/0). Pending payments are derived from order.status with a comment indicating it is not real payment tracking; low-stock threshold is hard-coded.",
+      "evidence": [
+        "frontend/src/pages/DashboardPage.tsx",
+        "frontend/src/components/dashboard/SalesChartCard.tsx",
+        "frontend/src/components/dashboard/PendingPaymentsCard.tsx",
+        "frontend/src/components/dashboard/LowInventoryCard.tsx"
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "requirement": "Invoice creation/rendering in aligned A5 layout including item code/name/qty/date/delivery person/delivered-to customer and exact firm details block as provided.",
+      "reason": "A5 print styling and firm header exist, but delivery person field is not evidenced, and items appear based on Product fields (no explicit item code). Firm address differs (uses 'New Delhi - 110080' rather than the specified '-80' string).",
+      "evidence": [
+        "frontend/src/components/invoice/InvoiceA5.tsx",
+        "frontend/src/index.css",
+        "backend/main.mo"
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "requirement": "Download invoice as PDF in A5 with correct filename/dimensions matching screen.",
+      "reason": "Download action is stubbed with a toast ('PDF download requires additional setup'); no PDF generation is implemented.",
+      "evidence": [
+        "frontend/src/pages/invoice/InvoicePage.tsx"
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "requirement": "Paytm UPI QR for invoices encoding exact total, and admin-only prompt if config missing in Settings.",
+      "reason": "Invoice draws a canvas pattern as a placeholder rather than a real QR code, and UPI payee is hard-coded (dharaenterprises@paytm) with no settings-driven configuration or missing-config admin prompt.",
+      "evidence": [
+        "frontend/src/components/invoice/InvoiceA5.tsx"
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "requirement": "Admin-only Settings section for changing user IDs/passwords and configuring UPI/Paytm QR parameters with persistence.",
+      "reason": "Settings route exists but SettingsPage implementation is not shown; no evidence of user credential changes or persisted UPI configuration used by invoice QR generation (current invoice uses hard-coded UPI fields).",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "frontend/src/components/invoice/InvoiceA5.tsx"
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "requirement": "Reports section: daily/monthly sales summary, profit/loss, tax (GST) reports derived from purchases/sales with GST rates.",
+      "reason": "Reports route exists but ReportsPage implementation is not shown; backend excerpt lacks purchase/sale cost records and GST fields needed for these computations.",
+      "evidence": [
+        "frontend/src/App.tsx",
+        "backend/main.mo"
+      ]
+    }
+  ],
+  "hallucinated_features": [
+    {
+      "description": "Internet Identity (II) authentication flow used as the primary login mechanism.",
+      "reason": "BuildRequest explicitly requires a username/password login system (REQ-1). The diff implements II-based identity via AuthClient and treats presence of identity as authentication.",
+      "evidence": [
+        "frontend/src/hooks/useInternetIdentity.ts",
+        "frontend/src/layouts/AppLayout.tsx",
+        "frontend/src/App.tsx"
+      ]
+    },
+    {
+      "description": "Secret-token based access-control initialization via URL parameter `caffeineAdminToken` calling `_initializeAccessControlWithSecret`.",
+      "reason": "Not requested in requirements; BuildRequest specifies initial admin username/password credentials rather than a secret URL token initialization mechanism.",
+      "evidence": [
+        "frontend/src/hooks/useActor.ts"
+      ]
+    },
+    {
+      "description": "User profile storage keyed by Principal (name/email/phone) with profile get/save endpoints.",
+      "reason": "Not requested in requirements; user management requirements are about username/password accounts, roles, and admin CRUD/disable, not principal-based user profile records.",
+      "evidence": [
+        "backend/main.mo"
+      ]
+    },
+    {
+      "description": "Orders model with generic statuses (#pending/#completed/#cancelled) and dashboard/payment logic based on `order.status` rather than explicit paid/unpaid/partial payment tracking.",
+      "reason": "Not requested as a standalone feature; requirements call for sales with explicit payment status and amounts (REQ-7) and ledger derivations (REQ-9). This implementation diverges into a simplified order status system.",
+      "evidence": [
+        "backend/main.mo",
+        "frontend/src/components/dashboard/PendingPaymentsCard.tsx",
+        "frontend/src/pages/inventory/OrderBookPage.tsx"
+      ]
+    }
+  ],
+  "confidence": 0.74,
+  "changed_files": [
+    "all_files_summary.json",
+    "backend/main.mo",
+    "frontend-file-summaries.txt",
+    "frontend/index.css",
+    "frontend/index.html",
+    "frontend/src/App.tsx",
+    "frontend/src/components/TopNavBar.tsx",
+    "frontend/src/components/dashboard/LowInventoryCard.tsx",
+    "frontend/src/components/dashboard/PendingPaymentsCard.tsx",
+    "frontend/src/components/dashboard/SalesChartCard.tsx",
+    "frontend/src/components/invoice/InvoiceA5.tsx",
+    "frontend/src/hooks/useActor.ts",
+    "frontend/src/hooks/useInternetIdentity.ts",
+    "frontend/src/hooks/useQueries.ts",
+    "frontend/src/index.css",
+    "frontend/src/layouts/AppLayout.tsx",
+    "frontend/src/main.tsx",
+    "frontend/src/pages/DashboardPage.tsx",
+    "frontend/src/pages/LoginPage.tsx",
+    "frontend/src/pages/inventory/InventoryPage.tsx",
+    "frontend/src/pages/inventory/LedgerPage.tsx",
+    "frontend/src/pages/inventory/OrderBookPage.tsx",
+    "frontend/src/pages/inventory/PurchasePage.tsx",
+    "frontend/src/pages/inventory/SalesPage.tsx",
+    "frontend/src/pages/invoice/InvoicePage.tsx",
+    "frontend/src/pages/register/CustomersPage.tsx",
+    "frontend/src/pages/register/UsersPage.tsx",
+    "frontend/src/pages/register/VendorsPage.tsx",
+    "frontend/src/pages/reports/ReportsPage.tsx",
+    "frontend/src/pages/settings/SettingsPage.tsx",
+    "frontend/src/utils/urlParams.ts",
+    "frontend/tailwind.config.js",
+    "project_state.json"
+  ]
+}

@@ -1,0 +1,457 @@
+{
+  "kind": "implementation_plan",
+  "version": "1.0",
+  "title": "Dhara Inventory — Frontend Implementation Plan",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "summary": "Add login UI, session persistence, and role-based UI guards for Admin vs Staff, including admin-only management screens.",
+      "acceptanceCriteria": [
+        "User can log in with username/password and remain authenticated across page refresh.",
+        "System supports at least roles: Admin and Staff (or equivalent), with UI and backend authorization checks.",
+        "Admin-only actions are blocked for non-admin users in both UI (hidden/disabled) and backend (rejected calls).",
+        "Initial admin credentials exist as specified and can be changed by an admin from Settings."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "create",
+          "description": "Create the app shell that wires authentication state, protected routing, and shared layout. Include role-aware route guards so admin-only screens are inaccessible for non-admin users."
+        },
+        {
+          "path": "frontend/src/auth/AuthProvider.tsx",
+          "operation": "create",
+          "description": "Implement a frontend auth/session context that supports username/password login UX, persists auth state across refresh (e.g., localStorage), and exposes current role for UI guarding. Use the selected authorization component concepts (role-based access control) at the UI layer; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/auth/RequireAuth.tsx",
+          "operation": "create",
+          "description": "Add reusable route guards: RequireAuth (blocks unauthenticated users) and RequireAdmin (blocks non-admin users), rendering an access-denied screen when needed. Use selected authorization component patterns for access-denied UX; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/LoginPage.tsx",
+          "operation": "create",
+          "description": "Create a username/password login screen matching the requested credentials flow, including error states and a logout action. Ensure post-login navigation returns to the dashboard."
+        },
+        {
+          "path": "frontend/src/components/AccessDeniedScreen.tsx",
+          "operation": "create",
+          "description": "Create a simple access denied component used by guards for unauthorized access attempts, with guidance to contact an admin."
+        }
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "summary": "Build top navbar with required dropdowns and wire the full page/route structure, protected behind authentication.",
+      "acceptanceCriteria": [
+        "Navbar renders consistently across authenticated pages.",
+        "Register dropdown contains Vendor, Customer, User screens.",
+        "Inventory dropdown contains Inventory, Sales, Purchase, Order Book, Ledger screens.",
+        "Invoice, Reports, and Settings are accessible as their own sections.",
+        "Routes are protected so unauthenticated users cannot access app pages."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/package.json",
+          "operation": "modify",
+          "description": "Add routing dependency (e.g., react-router-dom) and any required UI helper dependencies for navigation and dropdown composition."
+        },
+        {
+          "path": "frontend/src/routes/AppRouter.tsx",
+          "operation": "create",
+          "description": "Define all required routes for Dashboard, Register (Vendor/Customer/User), Inventory (Inventory/Sales/Purchase/Order Book/Ledger), Invoice, Reports, and Settings. Wrap routes with RequireAuth/RequireAdmin as appropriate to enforce protection."
+        },
+        {
+          "path": "frontend/src/layouts/AppLayout.tsx",
+          "operation": "create",
+          "description": "Create a shared authenticated layout that renders the top navbar and the main content area consistently across all authenticated pages."
+        },
+        {
+          "path": "frontend/src/components/TopNavBar.tsx",
+          "operation": "create",
+          "description": "Implement the top navigation bar with the specified sections and dropdowns. Compose shadcn-ui components (e.g., NavigationMenu/DropdownMenu/Button) without modifying frontend/src/components/ui. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/App.tsx",
+          "operation": "modify",
+          "description": "Wire AppRouter into the App shell and ensure unauthenticated users are routed to LoginPage while authenticated users see the AppLayout + navbar."
+        }
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "summary": "Create Vendor and Customer management screens under Register with add/list/search and deletion UI.",
+      "acceptanceCriteria": [
+        "User can create a vendor with required identity/contact fields and see it in a searchable/sortable list.",
+        "User can create a customer with required identity/contact fields and see it in a searchable/sortable list.",
+        "User can delete vendors/customers with confirmation, and deleted entities no longer appear in lists.",
+        "Backend persists vendors/customers and enforces authorization."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/register/VendorsPage.tsx",
+          "operation": "create",
+          "description": "Create Vendor management UI: add vendor form, searchable/sortable list, and delete-with-confirmation flow. Compose shadcn-ui form/table/dialog components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/register/CustomersPage.tsx",
+          "operation": "create",
+          "description": "Create Customer management UI using backendInterface customer capabilities (addCustomer/getAllCustomers/updateCustomer/deleteCustomer) for listing and mutations, including search/sort and delete confirmation. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/customers/useCustomers.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for customer list and mutations, including optimistic UI handling where appropriate and graceful error handling for authorization failures."
+        }
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "summary": "Create admin-only User management screen to create/list/assign roles and delete/disable users, hidden for non-admins.",
+      "acceptanceCriteria": [
+        "Only admin can create/update/delete/disable users.",
+        "Admin can assign a role/permission set per user.",
+        "Non-admin users cannot access user management UI or perform user management backend calls.",
+        "Disabled users cannot log in."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/register/UsersPage.tsx",
+          "operation": "create",
+          "description": "Create an admin-only User Management UI under Register > User. Provide create user, role assignment, list users, and disable/delete actions with confirmations. Use RequireAdmin guard and hide the nav item for non-admins. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/auth/useCallerRole.ts",
+          "operation": "create",
+          "description": "Add a hook to fetch and cache the caller role/admin status (e.g., via getCallerUserRole/isCallerAdmin) and expose it to navbar and guards, handling unauthorized states cleanly."
+        },
+        {
+          "path": "frontend/src/components/TopNavBar.tsx",
+          "operation": "modify",
+          "description": "Hide/disable Register > User entry for non-admins and ensure the Settings entry is also admin-only where required."
+        }
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "summary": "Implement Inventory item management UI with add/edit/delete and stock-related metadata visibility (arrival/sold dates per transaction).",
+      "acceptanceCriteria": [
+        "Inventory items support at least: item code, item name, and current quantity on hand.",
+        "System records stock-in (arrival/purchase) date and stock-out (sale) date at the transaction level (not just a single date per item).",
+        "User can add/edit/delete items (with safeguards if item has historical transactions).",
+        "Low inventory can be derived from quantity and a configurable low-stock threshold per item or global default."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/inventory/InventoryPage.tsx",
+          "operation": "create",
+          "description": "Create Inventory management UI backed by backendInterface product capabilities (getAllProducts/addProduct/updateProduct/deleteProduct/searchProducts). Include add/edit dialogs, delete confirmation, and list/table with search and sort. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/products/useProducts.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for products list/search and mutations (create/update/delete), plus utility to derive low-stock state based on thresholds."
+        },
+        {
+          "path": "frontend/src/pages/settings/InventorySettingsPanel.tsx",
+          "operation": "create",
+          "description": "Add UI for configuring low-stock thresholds (global default and/or per-item) and surfacing them to the inventory list and dashboard. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-6",
+      "summary": "Implement Purchase entry UI under Inventory > Purchase with vendor selection and line items, updating inventory quantities via backend capabilities.",
+      "acceptanceCriteria": [
+        "User can create a purchase record selecting a vendor and adding one or more line items with quantities and cost.",
+        "Submitting a purchase increases inventory quantities accordingly.",
+        "Purchase records are listed and filterable by date/vendor/item.",
+        "Backend persists purchases and inventory changes atomically."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/inventory/PurchasePage.tsx",
+          "operation": "create",
+          "description": "Create Purchase entry UI with vendor selector, purchase date, and multi-line item editor (product, qty, cost). Provide a purchases list with filters. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/forms/LineItemsEditor.tsx",
+          "operation": "create",
+          "description": "Create a reusable line-items editor component used by purchase and sales forms to add/remove product rows and compute totals. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-7",
+      "summary": "Implement Sales entry UI under Inventory > Sales with customer selection, delivery person, payment status (paid/unpaid/partial), and red highlight for pending.",
+      "acceptanceCriteria": [
+        "User can create a sale record selecting a customer and adding one or more line items with quantities and selling prices.",
+        "Submitting a sale decreases inventory quantities accordingly and records sale date.",
+        "Sale can be marked as paid/unpaid/partial with paid amount and due amount computed and stored.",
+        "Unpaid/partial entries are visually highlighted in red in relevant lists and have a clear “Pending” status label."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/inventory/SalesPage.tsx",
+          "operation": "create",
+          "description": "Create Sales entry UI with customer selector, sale date, delivery person name, multi-line items with selling prices, and payment status editor (paid/unpaid/partial) with computed due amount. Ensure pending items are highlighted in red. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/payments/PaymentStatusBadge.tsx",
+          "operation": "create",
+          "description": "Create a consistent status badge component used in Sales/Order Book/Ledger lists that visually emphasizes pending/unpaid states (red highlight) per design requirement. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-8",
+      "summary": "Implement Order Book table showing sold items/orders with filtering/search and payment status highlighting.",
+      "acceptanceCriteria": [
+        "Order Book lists sales/orders in a table with required columns (items/qty/date/delivery person/price/payment status).",
+        "User can filter by date range, customer, and payment status.",
+        "Entries with pending payment are highlighted in red.",
+        "Order Book is backed by persisted sales/order data (not just UI state)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/inventory/OrderBookPage.tsx",
+          "operation": "create",
+          "description": "Create Order Book UI backed by stored order/sales data (use backendInterface getAllOrders/getOrder where available). Render a table with required columns and filters (date range, customer, payment status) and red highlight for pending. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/hooks/orders/useOrders.ts",
+          "operation": "create",
+          "description": "Add React Query hooks for orders list/detail and mutations used by Order Book and related drill-down navigation, with filter helpers and empty-state handling."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Implement Ledger derived from Order Book/Sales with running balance and final positive/negative balance, emphasizing pending payments.",
+      "acceptanceCriteria": [
+        "Ledger is derived from sales/orders without duplicate manual entry.",
+        "Ledger shows per-customer (or overall) outstanding amounts and running balance depending on filters.",
+        "Ledger view includes a final balance (positive/negative) at the bottom.",
+        "Pending/unpaid amounts are clearly labeled and visually emphasized."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/inventory/LedgerPage.tsx",
+          "operation": "create",
+          "description": "Create Ledger UI that derives entries from orders/sales data and computes running totals and final balance. Include filters (customer/date/status) and emphasize pending items. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/utils/ledger.ts",
+          "operation": "create",
+          "description": "Add pure utility functions to derive ledger rows, compute running balances, and summarize totals from fetched order/sales data for reuse in Ledger and Reports."
+        }
+      ]
+    },
+    {
+      "id": "REQ-10",
+      "summary": "Build dashboard with sales chart, pending payments list, and low-inventory widget sourced from backend data.",
+      "acceptanceCriteria": [
+        "Sales chart renders from stored sales data and supports at least a daily view over the recent period (e.g., last 30 days).",
+        "Pending payments card lists each pending entry with name and due amount; clicking an entry navigates to its detail (sale/order/ledger).",
+        "Low inventory card lists items below threshold with remaining quantity.",
+        "All widgets load from backend data and handle empty states gracefully."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/package.json",
+          "operation": "modify",
+          "description": "Add a lightweight charting dependency (or implement with SVG) suitable for a simple sales chart, plus any required date utility dependency."
+        },
+        {
+          "path": "frontend/src/pages/DashboardPage.tsx",
+          "operation": "create",
+          "description": "Create dashboard page with three widgets: sales chart (daily last ~30 days), pending payments list (click-through to detail), and low-inventory list (below threshold). Use backend-derived data via hooks and render empty/error states gracefully. Compose shadcn-ui Card/Table components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/dashboard/SalesChartCard.tsx",
+          "operation": "create",
+          "description": "Implement the sales chart widget with a clean, minimal style consistent with the theme. Compose shadcn-ui card primitives; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/dashboard/PendingPaymentsCard.tsx",
+          "operation": "create",
+          "description": "Implement pending payments widget listing name and due amount with red emphasis for pending and navigation to relevant detail views. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/dashboard/LowInventoryCard.tsx",
+          "operation": "create",
+          "description": "Implement low-inventory widget listing items below threshold with remaining quantity and clear emphasis styling. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-11",
+      "summary": "Implement invoice view with print-ready A5 layout and correct firm details and alignment.",
+      "acceptanceCriteria": [
+        "Invoice screen allows selecting/creating an invoice from an order/sale and displays a print-ready A5 layout.",
+        "Invoice includes all specified fields and firm contact block exactly as provided.",
+        "Line items show item code, item name, qty, and pricing totals.",
+        "Layout is visually aligned and readable when printed to A5 (CSS print styles)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/invoice/InvoicePage.tsx",
+          "operation": "create",
+          "description": "Create invoice screen that can load an invoice derived from an order/sale and renders a print-ready A5 layout. Include required fields (item code/name/qty/date/delivery person/delivered-to) and the firm details block exactly as specified."
+        },
+        {
+          "path": "frontend/src/components/invoice/InvoiceA5.tsx",
+          "operation": "create",
+          "description": "Create a dedicated A5 invoice component responsible for consistent alignment, typography, and totals layout to match an 'original invoice' feel. Compose shadcn-ui primitives where appropriate; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/invoice/invoice-print.css",
+          "operation": "create",
+          "description": "Add print-specific styles to ensure A5 sizing, margins, and aligned rendering when printing/downloading. Keep styling consistent with the white/black theme."
+        }
+      ]
+    },
+    {
+      "id": "REQ-12",
+      "summary": "Enable invoice download as an A5 PDF with deterministic filename.",
+      "acceptanceCriteria": [
+        "User can click a “Download PDF” action on an invoice.",
+        "Downloaded PDF uses A5 dimensions and matches the on-screen invoice formatting closely.",
+        "Downloaded filename includes invoice number and date (or another deterministic identifier)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/package.json",
+          "operation": "modify",
+          "description": "Add PDF generation dependencies (e.g., jspdf + html2canvas or equivalent) required to export the invoice view to an A5-sized PDF."
+        },
+        {
+          "path": "frontend/src/utils/pdf.ts",
+          "operation": "create",
+          "description": "Implement a utility that captures the rendered invoice and generates an A5 PDF file with a deterministic filename, handling font scaling and pagination safeguards as needed."
+        },
+        {
+          "path": "frontend/src/pages/invoice/InvoicePage.tsx",
+          "operation": "modify",
+          "description": "Add a “Download PDF” action that uses the PDF utility to export the currently viewed invoice, and ensure error/disabled states are handled gracefully."
+        }
+      ]
+    },
+    {
+      "id": "REQ-13",
+      "summary": "Show Paytm UPI QR code on invoices encoding an exact-amount UPI payment request, with admin-only prompt if missing configuration.",
+      "acceptanceCriteria": [
+        "Invoice view displays a QR code for payment.",
+        "QR code encodes a UPI payment link/request including the exact invoice total amount.",
+        "If UPI payment configuration is missing, UI shows a clear admin-only prompt to configure it in Settings (without breaking invoice rendering)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/package.json",
+          "operation": "modify",
+          "description": "Add a QR code rendering dependency (e.g., qrcode / react-qr-code) to display a scannable UPI payment QR on invoices."
+        },
+        {
+          "path": "frontend/src/utils/upi.ts",
+          "operation": "create",
+          "description": "Add a utility to generate a standards-compatible UPI payment URI that includes payee parameters and the exact invoice total amount."
+        },
+        {
+          "path": "frontend/src/components/invoice/InvoicePaymentQR.tsx",
+          "operation": "create",
+          "description": "Create a component that renders a QR code for the generated UPI URI and shows an admin-only configuration prompt if required settings are missing. Compose shadcn-ui components for callouts/dialogs; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/invoice/InvoicePage.tsx",
+          "operation": "modify",
+          "description": "Wire InvoicePaymentQR into the invoice layout, ensuring it never breaks invoice rendering when configuration is missing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-14",
+      "summary": "Implement admin-only Settings section to manage user credentials and core business/payment settings including UPI/Paytm QR configuration.",
+      "acceptanceCriteria": [
+        "Settings page is accessible only to admins (non-admins cannot view or call related backend methods).",
+        "Admin can change a user’s username and/or password.",
+        "Admin can configure the UPI/Paytm QR payment parameters used to generate invoice QR codes.",
+        "Settings changes persist and take effect without redeploying."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/settings/SettingsPage.tsx",
+          "operation": "create",
+          "description": "Create an admin-only Settings page with sections for user credential management and business/payment configuration (UPI/Paytm QR parameters). Compose shadcn-ui Tabs/Form components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/settings/UPISettingsForm.tsx",
+          "operation": "create",
+          "description": "Create a form to edit UPI/Paytm QR configuration used by invoice QR generation, including validation and save feedback. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/components/settings/UserCredentialsPanel.tsx",
+          "operation": "create",
+          "description": "Create admin-only UI to change user IDs/passwords and manage user status (disable/enable) as required, with confirmations and clear warnings. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/routes/AppRouter.tsx",
+          "operation": "modify",
+          "description": "Ensure Settings routes are wrapped in RequireAdmin and that non-admin navigation cannot reach Settings."
+        }
+      ]
+    },
+    {
+      "id": "REQ-15",
+      "summary": "Apply a consistent premium white/black theme with restrained accents and clear red emphasis for pending/unpaid and alerts.",
+      "acceptanceCriteria": [
+        "App uses a consistent white/black dominant theme with restrained accent colors.",
+        "Tables, forms, and dashboard cards are readable and visually consistent.",
+        "Pending payments and alerts (e.g., low stock) use clear, accessible emphasis (including red highlight for unpaid)."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/index.css",
+          "operation": "create",
+          "description": "Add global styles and CSS variables to enforce the white/black premium theme across the app, aligning with Tailwind/shadcn conventions and ensuring accessible contrast."
+        },
+        {
+          "path": "frontend/tailwind.config.js",
+          "operation": "modify",
+          "description": "Tune Tailwind theme tokens (colors/radius/shadows) as needed to match a minimal premium aesthetic while keeping restrained accent colors."
+        },
+        {
+          "path": "frontend/src/layouts/AppLayout.tsx",
+          "operation": "modify",
+          "description": "Ensure consistent page spacing, background, typography, and card/table styling across all pages using shared layout structure."
+        }
+      ]
+    },
+    {
+      "id": "REQ-16",
+      "summary": "Implement Reports section with daily/monthly sales summary, profit/loss, and GST tax reporting computed from stored purchase and sales data.",
+      "acceptanceCriteria": [
+        "Reports page provides daily and monthly sales totals over selectable date ranges.",
+        "Profit/Loss report calculates revenue minus cost of goods sold based on recorded selling prices and purchase costs.",
+        "Tax report supports GST totals based on configured per-item (or per-line) GST rates and summarizes taxable value and GST amount over a date range.",
+        "All reports are derived from persisted purchases/sales and match underlying records when cross-checked."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/pages/reports/ReportsPage.tsx",
+          "operation": "create",
+          "description": "Create Reports page with sections/tabs for sales summary, profit/loss, and tax (GST if applicable), including date range controls and tables/cards for results. Compose shadcn-ui Tabs/Date inputs/Table components; verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/utils/reports.ts",
+          "operation": "create",
+          "description": "Add utilities to compute daily/monthly totals, profit/loss (revenue minus cost), and GST summaries from fetched purchase/sales/order data and configured GST rates."
+        },
+        {
+          "path": "frontend/src/components/reports/ReportFilters.tsx",
+          "operation": "create",
+          "description": "Create a reusable report filter bar (date range, grouping daily/monthly, optional customer/vendor/product filters) used across report views. Compose shadcn-ui components; verify the component's usage instructions before implementing."
+        }
+      ]
+    }
+  ]
+}
